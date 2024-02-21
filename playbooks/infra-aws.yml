@@ -1,0 +1,8 @@
+- name: Create AWS VMs
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: Create resources on AWS
+      include_role:
+        name: 'aws'

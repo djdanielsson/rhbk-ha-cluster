@@ -1,0 +1,116 @@
+---
+domain_name: "ansiblefest"
+privatednszone: "internal.ansiblemiddleware.com"
+relative_name: "ansiblefest"
+dns_name: "demos.ansiblemiddleware.com"
+regions:
+  - us-east-1
+  - us-west-2
+base_cidr_block: '10.0.0.0/16'
+base_vpc:
+  name: "rhbk-{{ region }}"
+  cidr_block: "{{ base_cidr_block }}"
+  subnets:
+    "{{ base_cidr_block }}"
+vpc: {}
+security_groups:
+    - name: datagrid
+      description: Ingress rules for DataGrid
+      rules:
+        - rule_desc: 'ssh'
+          from_port: '22'
+          to_port: '22'
+          proto: tcp
+          cidr_ip: 0.0.0.0/0
+        - rule_desc: 'jgroups - DataGrid'
+          from_port: '7800'
+          to_port: '7801'
+          proto: tcp
+          cidr_ip: 10.0.0.0/16
+        - rule_desc: 'rest - DataGrid'
+          from_port: '11222'
+          to_port: '11222'
+          proto: tcp
+          cidr_ip: 10.0.0.0/16
+    - name: rhbk
+      description: Ingress rules for Red Hat Build of Keycloak
+      rules:
+        - rule_desc: 'ssh'
+          from_port: '22'
+          to_port: '22'
+          proto: tcp
+          cidr_ip: 0.0.0.0/0
+        - rule_desc: 'http - Single Sign-on'
+          from_port: '8080'
+          to_port: '8080'
+          proto: tcp
+          cidr_ip: 10.0.0.0/16
+        - rule_desc: 'https - Single Sign-on'
+          from_port: '443'
+          to_port: '443'
+          proto: tcp
+          cidr_ip: 10.0.0.0/16
+        - rule_desc: 'jgroups - Single Sign-on'
+          from_port: '7800'
+          to_port: '7801'
+          proto: tcp
+          cidr_ip: 10.0.0.0/16
+
+datagrid_ec2_type: t3.micro
+ec2_vm:
+  datagrid:
+    type: "{{ datagrid_ec2_type }}"
+    count: "{{ datagrid_ec2_count }}"
+  rhbk:
+    type: "{{ rhbk_ec2_type }}"
+    count: "{{ rhbk_ec2_count }}"
+vm: []
+
+  - name: 'site1-datagrid1'
+    site: 'site1'
+    role: 'datagrid'
+    region: us-east-1
+    subnet: "10.0.3.16/28"
+    type: "{{ ec2types['datagrid'] | default('t2.small') }}"
+  - name: 'site1-datagrid2'
+    site: 'site1'
+    role: 'datagrid'
+    region: us-east-1
+    subnet: "10.0.3.16/28"
+    type: 't2.small'
+  - name: 'site2-datagrid1'
+    site: 'site2'
+    role: 'datagrid'
+    region: us-west-2
+    subnet: "10.0.4.16/28"
+    type: 't2.small'
+  - name: 'site2-datagrid2'
+    site: 'site2'
+    role: 'datagrid'
+    region: us-west-2
+    subnet: "10.0.4.16/28"
+    type: 't2.small'
+  - name: 'site1-rhbk1'
+    site: 'site1'
+    role: 'rhbk'
+    region: us-east-1
+    subnet: "10.0.3.16/28"
+    type: 't2.small'
+  - name: 'site2-rhbk1'
+    site: 'site2'
+    role: 'rhbk'
+    region: us-west-2
+    subnet: "10.0.4.16/28"
+    type: 't2.small'
+
+# Everything that supports tagging will be tagged at least with these:
+resource_tags:
+  Environment: ansiblefest-demo
+  Application: multicloud-rhbk-datagrid
+  Created-By: ansible
+  Cloud: AWS
+
+ssh_key_name: ansiblefest-demo
+
+ttl: 60
+destroy_networking: False
