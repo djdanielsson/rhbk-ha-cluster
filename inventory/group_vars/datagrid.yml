@@ -1,0 +1,28 @@
+---
+# data_grid variables
+admin_pass: admin_password
+user_accounts:
+  - { name: 'ggraziol', password: 'adminpassword', roles: 'admin' }
+  - { name: 'rpelisse', password: 'password', roles: 'observer' }
+  - { name: 'ablock', password: 'password', roles: 'observer' }
+  - { name: 'rhsso', password: 'rhssopassword', roles: 'application' }
+
+# data_grid default overrides
+data_grid_keycloak_caches: True
+data_grid_configure_firewalld: True
+data_grid_keycloak_persistence: False
+data_grid_offline_install: False
+data_grid_jgroups_relay: True
+data_grid_jgroups_relay_sites: "{{ regions }}"
+data_grid_jgroups_relay_site: "{{ hostvars[inventory_hostname].tags.Region }}"
+
+data_grid_default_realm_tls: True
+data_grid_keystore_path: /etc/pki/java/keystore.jks
+data_grid_keystore_alias: "*{{ domain_name }}"
+
+install_keystore: True
+
+data_grid_bind_address: "{{inventory_hostname}}{{domain_name}}"
+data_grid_url: "https://{{inventory_hostname}}{{domain_name}}:11222"
+
+data_grid_version: 8.4.6

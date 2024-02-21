@@ -1,0 +1,19 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1
+  - eu-central-1
+filters:
+  tag:Created-By: ansible
+  tag:Application: rhbk
+  tag:Environment: rhbk-datagrid-aws
+hostnames:
+  - tag:Name
+leading_separator: no
+keyed_groups:
+ - key: tags.Role
+ - key: tags.Site
+ - key: placement.region
+ - key: tags.Cloud
+strict_permissions: False
+compose:
+  ansible_host: public_ip_address
