@@ -5,7 +5,7 @@
     region: "{{ region }}"
     cidr: "{{ subnet }}"
     tags: "{{ resource_tags }}"
-    az: "{{ vpc[region].subnets[subnet].az }}"
+    az: "{{ vpc[region].subnets[subnet].az | default(omit) }}"
     map_public: yes
   register: created_subnet
   retries: 3

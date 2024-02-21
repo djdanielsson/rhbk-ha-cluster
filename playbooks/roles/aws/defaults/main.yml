@@ -6,12 +6,9 @@ dns_name: "demos.ansiblemiddleware.com"
 regions:
   - us-east-1
   - us-west-2
-base_cidr_block: '10.0.0.0/16'
-base_vpc:
-  name: "rhbk-{{ region }}"
-  cidr_block: "{{ base_cidr_block }}"
-  subnets:
-    "{{ base_cidr_block }}"
+base_cidr_netmask: 24
+base_cidr_address: 10.0.0.0
+base_cidr_block: '{{ base_cidr_address }}/{{ base_cidr_netmask }}'
 vpc: {}
 security_groups:
     - name: datagrid
@@ -57,6 +54,9 @@ security_groups:
           cidr_ip: 10.0.0.0/16
 
 datagrid_ec2_type: t3.micro
+datagrid_ec2_count: [0, 1]
+rhbk_ec2_type: t3.micro
+rhbk_ec2_count: [0]
 ec2_vm:
   datagrid:
     type: "{{ datagrid_ec2_type }}"
@@ -65,43 +65,6 @@ ec2_vm:
     type: "{{ rhbk_ec2_type }}"
     count: "{{ rhbk_ec2_count }}"
 vm: []
-
-  - name: 'site1-datagrid1'
-    site: 'site1'
-    role: 'datagrid'
-    region: us-east-1
-    subnet: "10.0.3.16/28"
-    type: "{{ ec2types['datagrid'] | default('t2.small') }}"
-  - name: 'site1-datagrid2'
-    site: 'site1'
-    role: 'datagrid'
-    region: us-east-1
-    subnet: "10.0.3.16/28"
-    type: 't2.small'
-  - name: 'site2-datagrid1'
-    site: 'site2'
-    role: 'datagrid'
-    region: us-west-2
-    subnet: "10.0.4.16/28"
-    type: 't2.small'
-  - name: 'site2-datagrid2'
-    site: 'site2'
-    role: 'datagrid'
-    region: us-west-2
-    subnet: "10.0.4.16/28"
-    type: 't2.small'
-  - name: 'site1-rhbk1'
-    site: 'site1'
-    role: 'rhbk'
-    region: us-east-1
-    subnet: "10.0.3.16/28"
-    type: 't2.small'
-  - name: 'site2-rhbk1'
-    site: 'site2'
-    role: 'rhbk'
-    region: us-west-2
-    subnet: "10.0.4.16/28"
-    type: 't2.small'
 
 # Everything that supports tagging will be tagged at least with these:
 resource_tags:
@@ -113,4 +76,4 @@ resource_tags:
 ssh_key_name: ansiblefest-demo
 
 ttl: 60
-destroy_networking: False
+destroy_networking: true

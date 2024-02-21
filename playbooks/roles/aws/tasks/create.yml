@@ -1,16 +1,32 @@
 ---
-- name: Select latest RHEL8 AMI
+- name: Check if vpc parameter is passed in
+  set_fact:
+    build_vpc: true
+  when: vpc.keys() | length == 0
+
+- name: Set vpc
   set_fact:
     vpc: >-
-      {{ vpc | default({}) | combine({ item: base_vpc }) }}
+      {{ vpc | default({}) | combine({ 
+          item: {
+            'name': 'rhbk-' + item,
+            'cidr_block': cidr_block,
+            'subnets': [ cidr_block ]
+          }
+        })
+      }}
   loop: "{{ regions }}"
-  when: vpc.keys() | length > 0
+  loop_control:
+    index_var: vpc_idx
+  when: build_vpc
+  vars:
+    cidr_block: "{{ base_cidr_block | ansible.utils.ipsubnet(base_cidr_netmask + 2, vpc_idx + 1) }}"
 
 - name: Find RHEL8 AMIs
   ec2_ami_info:
     region: "{{ item }}"
     filters:
-      name: RHEL-8.6.0_HVM-*
+      name: RHEL-8.9.0_HVM-*
       architecture: x86_64
       root-device-type: ebs
       virtualization-type: hvm
@@ -95,9 +111,31 @@
 - set_fact:
     vm_result: []
 
+- name: Check if vm parameter is passed in
+  set_fact:
+    build_vm: true
+  when: vm | length == 0
+
+- debug:
+    msg: vpc_result
+
+- name: Set ec2 compute resources
+  set_fact:
+    vm: >-
+      {{ vm | default([]) + [{
+          'name': item.1 + '-' + item.0.0.key + '-' + (item.0.1 + 1) | string,
+          'role': item.0.0.key,
+          'region': item.1,
+          'subnet': (vpc_result[item.1].subnets | dict2items | first).value,
+          'type': item.0.0.value.type
+        }]
+      }}
+  loop: "{{ ec2_vm | dict2items | subelements('value.count') | product(regions) | list }}"
+  when: build_vm
+
 - name: Create EC2 instances for services
   include_tasks: instance.yml
-  loop: "{{ vm + db_vm + eap_vm}}"
+  loop: "{{ vm }}"
   loop_control:
     loop_var: instance
     index_var: vm_idx

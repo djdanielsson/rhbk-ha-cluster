@@ -12,11 +12,11 @@
     region: "{{ instance.region }}"
     name: "{{ instance.name }}"
     instance_ids: "{{ instance.name }}"
-    instance_type: "{{ instance.type | default('t2.micro') }}"
-    vpc_subnet_id: "{{ vpc_result[instance.region].subnets[instance.subnet].subnet_id }}"
+    instance_type: "{{ instance.type | default('t3.micro') }}"
+    vpc_subnet_id: "{{ instance.subnet.subnet_id | default(omit) }}"
     key_name: "{{ ssh_key_name }}"
     security_group: "{{ vpc_result[instance.region].name }}-{{ instance.role }}"
-    tags: "{{ resource_tags | combine( { 'Role': instance.role, 'Site': instance.site, 'Region': instance.region } ) }}"
+    tags: "{{ resource_tags | combine( { 'Role': instance.role, 'Site': instance.region, 'Region': instance.region } ) }}"
     image_id: "{{ latest_ami[instance.region] }}"
     termination_protection: False
     volumes:
@@ -45,7 +45,7 @@
     public_ip: "{{ running_instance.instances[0].public_ip_address | default('') }}"
     vm_result: "{{ vm_result + [{
       'name': instance.name,
-      'site': instance.site,
+      'site': instance.region,
       'region': instance.region,
       'role': instance.role,
       'subnet': instance.subnet,

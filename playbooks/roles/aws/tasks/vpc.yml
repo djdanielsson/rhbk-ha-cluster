@@ -14,7 +14,8 @@
    tags: "{{ resource_tags }}"
   register: created_igw
 
-- set_fact:
+- name: Update vpc data
+  set_fact:
     vpc_result: "{{ vpc_result | combine(
       { region: vpc_data | combine( 
         { 'vpc_id': created_vpc.vpc.id, 
