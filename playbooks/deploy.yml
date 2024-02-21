@@ -1,10 +1,7 @@
 ---
 - import_playbook: prerequisites.yml
 
-- import_playbook: loadbalancer.yml
-
 - import_playbook: datagrid.yml
 
-- import_playbook: sso.yml
+- import_playbook: rhbk.yml
 
-- import_playbook: eap.yml

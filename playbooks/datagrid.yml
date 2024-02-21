@@ -1,7 +1,6 @@
 ---
 - name: Playbook for JDG Hosts
   hosts: datagrid
-  become: yes
   roles:
     - role: redhat.data_grid.data_grid
       data_grid_users: "{{ user_accounts }}"

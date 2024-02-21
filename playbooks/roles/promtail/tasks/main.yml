@@ -1,10 +1,12 @@
 ---
 - name: Ensure unzip is installed
+  become: True
   dnf:
     name: unzip
     state: present
 
 - name: Setup promtail data directory
+  become: True
   file:
     state: directory
     dest: "{{ promtail_directory }}"
@@ -13,12 +15,14 @@
     mode: 0750
 
 - name: Fetch promtail binary
+  become: True
   get_url:
     url: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-amd64.zip"
     dest: "{{ promtail_directory }}/"
   register: new_archive
 
 - name: Unarchive promtail
+  become: True
   unarchive:
     src: "{{ promtail_directory }}/promtail-linux-amd64.zip"
     dest: "{{ promtail_directory }}/"
@@ -28,12 +32,14 @@
     - Restart promtail
 
 - name: Grant exec bit to promtail binary
+  become: True
   file:
     dest: "{{ promtail_directory }}/promtail-linux-amd64"
     mode: a+x
   when: new_archive.changed
 
 - name: Setup promtail systemd unit
+  become: True
   template:
     dest: "/etc/systemd/system/promtail.service"
     src: promtail.service.j2
@@ -45,6 +51,7 @@
     - Restart promtail
 
 - name: Configure promtail
+  become: True
   template:
     dest: '{{ promtail_directory }}/promtail.yml'
     src: 'promtail.yml.j2'
