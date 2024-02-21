@@ -1,6 +1,6 @@
 ---
 collections:
   - name: redhat.data_grid
-  - name: redhat.sso
+  - name: redhat.rhbk
   - name: community.aws
   - name: amazon.aws

@@ -4,12 +4,8 @@ domain_name: '.internal.ansiblemiddleware.com'
 external_domain_name: 'ansiblefest.demos.ansiblemiddleware.com'
 regions:
   - eu-central-1
-  - us-east-1
+  - us-east-2
 resource_tags:
   Environment: rhbk-datagrid-aws
   Application: rhbk
   Created-By: ansible
-#datagrid_ec2_type: t3.micro
-#rhbk_ec2_type: t3.micro
-#datagrid_ec2_count: 2
-#rhbk_ec2_count: 1
