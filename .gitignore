@@ -1,0 +1,3 @@
+ansible.cfg
+*.tar.gz
+*.pyc
