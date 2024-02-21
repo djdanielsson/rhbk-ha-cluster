@@ -3,7 +3,7 @@
   hosts: rhbk
   roles:
     - role: redhat.rhbk.rhbk
-      rhbk_admin_password: "{{ admin_pass }}"
+      rhbk_admin_pass: "{{ admin_pass }}"
   pre_tasks:
     - name: Configure promtail
       ansible.builtin.include_role:
@@ -20,7 +20,7 @@
           delegate_to: "{{ ansible_play_hosts | first }}"
           run_once: true
       vars:
-        rhbk_admin_password: "{{ admin_pass }}"
+        rhbk_admin_pass: "{{ admin_pass }}"
         rhbk_realm: addressbook
         rhbk_clients:
           - name: addressbook
