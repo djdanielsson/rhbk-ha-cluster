@@ -1,9 +1,10 @@
 ---
 - name: Ensure unzip is installed
-  become: True
-  dnf:
-    name: unzip
-    state: present
+  ansible.builtin.include_role:
+    name: fastpackages
+  vars:
+    packages_list:
+      - unzip
 
 - name: Setup promtail data directory
   become: True

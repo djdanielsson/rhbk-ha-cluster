@@ -15,7 +15,7 @@
       when: not skip_promtail is defined
   post_tasks:
     - include_role:
-        name: rhbk_realm
+        name: redhat.rhbk.rhbk_realm
         apply:
           delegate_to: "{{ ansible_play_hosts | first }}"
           run_once: true
