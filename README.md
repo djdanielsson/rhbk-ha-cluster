@@ -1,6 +1,11 @@
 # rhbk-datagrid-aws
 
 
+### 0. prerequisites
+
+* An AWS account with permissions on `ec2` and `rds` with default profile in $HOME/.aws/credentials
+* TLS certificates for the desired domain name to provide the authentication service
+
 ### 1. create ansible.cfg
 
 ```
@@ -25,12 +30,20 @@ token=<automation_hub_token>
 
 Set the `token` to the value you get after authentication on automation hub.
 
-### 2. create key pair
+
+### 2. install dependencies
+
+    # pip install -r requirements.txt
+    # ansible-galaxy collection install -r requirements.yml
+
+
+### 3. create key pair
 
 * Paste the path to the private key in ansible.cfg option `private_key_file`
 * Copy the public key file to `files/id_rsa_aws.pub`
 
-### 3. domain names and certificates
+
+### 4. domain names and certificates
 
 
 

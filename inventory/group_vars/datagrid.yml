@@ -15,6 +15,7 @@ data_grid_offline_install: False
 data_grid_jgroups_relay: True
 data_grid_jgroups_relay_sites: "{{ regions }}"
 data_grid_jgroups_relay_site: "{{ hostvars[inventory_hostname].tags.Region }}"
+data_grid_jgroups_discovery: TCPPING
 
 data_grid_default_realm_tls: True
 data_grid_keystore_path: /etc/pki/java/keystore.jks
