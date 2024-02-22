@@ -9,7 +9,7 @@
       ansible.builtin.include_role:
         name: promtail
       vars:
-        promtail_job_name: sso
+        promtail_job_name: rhbk
         promtail_logfile: /var/log/sso/server.log
         promtail_region: "{{ hostvars[inventory_hostname].tags.Region }}"
       when: not skip_promtail is defined
@@ -20,7 +20,8 @@
           delegate_to: "{{ ansible_play_hosts | first }}"
           run_once: true
       vars:
-        rhbk_admin_pass: "{{ admin_pass }}"
+        rhbk_admin_password: "{{ admin_pass }}"
+        rhbk_context: ''
         rhbk_realm: addressbook
         rhbk_clients:
           - name: addressbook
@@ -53,4 +54,3 @@
                   - client: addressbook
                     role: flangeuser
                     realm: addressbook
-  
