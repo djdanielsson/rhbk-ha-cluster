@@ -1,11 +1,11 @@
 ---
 rhbk_ha_enabled: True
 rhbk_frontend_url: "https://{{ external_domain_name }}/auth/"
-rhbk_jdbc_engine: mariadb
-rhbk_jdbc_url: "mariadb://whatever:3006/keycloak?socketTimeout=10000"
+rhbk_jdbc_engine: postgres
+rhbk_jdbc_url: "jdbc:postgresql://rhbk-datagrid-aws.cluster-cqy2krcosm24.eu-central-1.rds.amazonaws.com:5432/keycloak?socketTimeout=10000"
 
-rhbk_db_user: keycloak-user
-rhbk_db_pass: keycloak-pass
+rhbk_db_user: keycloak
+rhbk_db_pass: 'keycloak-pass'
 rhbk_configure_firewalld: True
 rhbk_offline_install: False
 rhbk_db_background_validate_on_match: True
