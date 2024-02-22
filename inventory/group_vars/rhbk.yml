@@ -2,7 +2,7 @@
 rhbk_ha_enabled: True
 rhbk_frontend_url: "https://{{ external_domain_name }}/auth/"
 rhbk_jdbc_engine: postgres
-rhbk_jdbc_url: "jdbc:postgresql://rhbk-datagrid-aws.cluster-cqy2krcosm24.eu-central-1.rds.amazonaws.com:5432/keycloak?socketTimeout=10000"
+rhbk_jdbc_url: "jdbc:postgresql://{{ aurora_endpoint }}/keycloak?socketTimeout=10000"
 
 rhbk_db_user: keycloak
 rhbk_configure_firewalld: True
@@ -12,4 +12,4 @@ rhbk_db_valid_conn_sql: 'SELECT 1'
 
 rhbk_infinispan_user: rhsso
 rhbk_infinispan_use_ssl: True
-rhbk_infinispan_url: "{{ data_grid_jgroups_relay_site }}-datagrid1{{ domain_name }}"
+rhbk_infinispan_url: "{{ data_grid_jgroups_relay_site }}-datagrid-1{{ domain_name }}"
