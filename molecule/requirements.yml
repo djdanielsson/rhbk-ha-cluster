@@ -1,0 +1,7 @@
+---
+collections:
+  - name: redhat.rhbk
+  - name: redhat.data_grid
+  - name: community.general
+  - name: ansible.posix
+  - name: community.docker

@@ -1,7 +1,7 @@
 ---
 jvm_package: java-17-openjdk-headless
 domain_name: '.internal.ansiblemiddleware.com'
-external_domain_name: 'ansiblefest.demos.ansiblemiddleware.com'
+external_domain_name: 'rhbk.demos.ansiblemiddleware.com'
 regions:
   - eu-central-1
   - us-east-2

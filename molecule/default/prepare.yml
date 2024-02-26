@@ -1,0 +1,42 @@
+---
+- name: Prepare packages
+  hosts: all
+  tasks:
+    - name: Install sudo
+      ansible.builtin.yum:
+        name: sudo
+        state: present
+
+- name: Prepare rhbk tls
+  hosts: rhbk
+  tasks:
+    - name: Create certificate request
+      ansible.builtin.command: openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj '/CN=instance_rhbk'
+      delegate_to: localhost
+      changed_when: False
+
+    - name: Create conf directory # risky-file-permissions in test user account does not exist yet
+      ansible.builtin.file:
+        state: directory
+        path: "/opt/rhbk/certs/"
+        mode: 0755
+
+    - name: Copy certificates
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/opt/rhbk/certs/{{ item }}"
+        mode: 0444
+      loop:
+        - cert.pem
+        - key.pem
+
+- name: Prepare datgrid tls
+  hosts: datagrid
+  tasks:
+    - name: Install keystore
+      copy:
+        src: keystore.jks
+        dest: /etc/pki/java/
+        owner: root
+        group: root
+        mode: 0444

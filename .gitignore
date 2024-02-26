@@ -2,3 +2,4 @@ ansible.cfg
 vault-pass
 *.tar.gz
 *.pyc
+molecule/**/*.pem

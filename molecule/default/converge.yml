@@ -1,0 +1,84 @@
+---
+- name: Converge data_grid
+  hosts: datagrid
+  vars:
+      user_accounts:
+        - { name: 'admin', password: 'adminpassword', roles: 'admin' }
+        - { name: 'rhsso', password: 'rhssopassword', roles: 'application' }
+      admin_password: "admin_password"
+      domain_name: '.internal.ansiblemiddleware.com'
+      data_grid_keycloak_caches: True
+      data_grid_configure_firewalld: False
+      data_grid_keycloak_persistence: False
+      data_grid_offline_install: False
+      data_grid_jgroups_relay: True
+      data_grid_jgroups_relay_sites: [ site ]
+      data_grid_jgroups_relay_site: site
+      data_grid_jgroups_discovery: TCPPING
+      data_grid_default_realm_tls: True
+      data_grid_keystore_path: /etc/pki/java/keystore.jks
+      data_grid_keystore_alias: "*{{ domain_name }}"
+      install_keystore: True
+      data_grid_bind_address: "{{inventory_hostname}}{{domain_name}}"
+      data_grid_url: "https://{{inventory_hostname}}{{domain_name}}:11222"
+      rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
+      rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
+  roles:
+    - role: redhat.data_grid.data_grid
+      data_grid_users: "{{ user_accounts }}"
+      data_grid_supervisor_password: "{{ admin_password }}"
+
+- name: Converge rhbk
+  hosts: rhbk
+  vars:
+    skip_promtail: True
+    admin_pass: "remembertochangeme"
+    rhbk_jdbc_engine: "dev_file"
+    rhbk_realm: TestRealm
+    rhbk_host: instance_rhbk
+    rhbk_log: file
+    rhbk_https_key_file_enabled: True
+    rhbk_key_file: "/opt/rhbk/certs/key.pem"
+    rhbk_cert_file: "/opt/rhbk/certs/cert.pem"
+    rhbk_ha_enabled: True
+    rhbk_frontend_url: "https://instance_rhbk/auth/"
+    rhbk_db_user: keycloak
+    rhbk_configure_firewalld: False
+    rhbk_infinispan_user: rhsso
+    rhbk_infinispan_use_ssl: False
+    rhbk_infinispan_url: "instance_dg1"
+    rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
+    rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
+  roles:
+    - role: redhat.rhbk.rhbk
+      rhbk_admin_pass: "{{ admin_pass }}"
+    - role: redhat.rhbk.rhbk_realm
+      rhbk_context: ''
+      rhbk_client_default_roles:
+        - TestRoleAdmin
+        - TestRoleUser
+      rhbk_client_users:
+        - username: TestUser
+          password: password
+          client_roles:
+            - client: TestClient
+              role: TestRoleUser
+              realm: "{{ rhbk_realm }}"
+        - username: TestAdmin
+          password: password
+          client_roles:
+            - client: TestClient
+              role: TestRoleUser
+              realm: "{{ rhbk_realm }}"
+            - client: TestClient
+              role: TestRoleAdmin
+              realm: "{{ rhbk_realm }}"
+      rhbk_realm: TestRealm
+      rhbk_clients:
+        - name: TestClient
+          roles: "{{ rhbk_client_default_roles }}"
+          realm: "{{ rhbk_realm }}"
+          public_client: "{{ rhbk_client_public }}"
+          web_origins: "{{ rhbk_client_web_origins }}"
+          users: "{{ rhbk_client_users }}"
+          client_id: TestClient

@@ -2,9 +2,7 @@
 # data_grid variables
 admin_pass: admin_password
 user_accounts:
-  - { name: 'ggraziol', password: 'adminpassword', roles: 'admin' }
-  - { name: 'rpelisse', password: 'password', roles: 'observer' }
-  - { name: 'ablock', password: 'password', roles: 'observer' }
+  - { name: 'admin', password: 'adminpassword', roles: 'admin' }
   - { name: 'rhsso', password: 'rhssopassword', roles: 'application' }
 
 # data_grid default overrides
