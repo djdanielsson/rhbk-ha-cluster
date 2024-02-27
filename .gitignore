@@ -1,5 +1,6 @@
 ansible.cfg
 vault-pass
 *.tar.gz
+*.zip
 *.pyc
 molecule/**/*.pem
