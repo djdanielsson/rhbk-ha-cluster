@@ -9,3 +9,4 @@ resource_tags:
   Environment: rhbk-datagrid-aws
   Application: rhbk
   Created-By: ansible
+skip_promtail: True
