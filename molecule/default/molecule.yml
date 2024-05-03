@@ -35,6 +35,8 @@ platforms:
       - name: site
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_VERBOSITY: 3
   config_options:
     defaults:
       interpreter_python: auto_silent
@@ -48,8 +50,6 @@ provisioner:
     host_vars:
       localhost:
         ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  env:
-    ANSIBLE_FORCE_COLOR: "true"
 verifier:
   name: ansible
 scenario:
