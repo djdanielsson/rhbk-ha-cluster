@@ -27,7 +27,7 @@ tags:
   - a4mw
 dependencies:
   "redhat.rhbk": ">=2.0.0"
-  "redhat.data_grid": ">=1.3.0"
+  "redhat.data_grid": ">=1.1.4"
   "ansible.posix": ">=1.4.0"
 repository: https://github.com/ansible-middleware/rhbk-datagrid-aws
 documentation: https://ansible-middleware.github.io/rhbk-datagrid-aws

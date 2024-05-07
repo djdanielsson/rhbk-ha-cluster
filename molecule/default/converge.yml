@@ -33,7 +33,7 @@
   vars:
     skip_promtail: True
     admin_pass: "remembertochangeme"
-    rhbk_jdbc_engine: "dev_file"
+    #rhbk_jdbc_engine: "dev_file"
     rhbk_realm: TestRealm
     rhbk_host: instance_rhbk
     rhbk_log: file
