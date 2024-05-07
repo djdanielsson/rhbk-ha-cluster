@@ -1,6 +1,6 @@
 ---
 - name: "Query for existing running instances"
-  ec2_instance_info:
+  community.aws.ec2_instance_info:
     region: "{{ item }}"
     filters:
       "tag:Environment": "{{ resource_tags['Environment'] }}"
@@ -9,17 +9,19 @@
   register: instances
   loop: "{{ vpc | list }}"
 
-- debug:
+- name: "Report of instances"
+  ansible.builtin.debug:
     var: instances
 
-- debug:
+- name: "Report of vpc"
+  ansible.builtin.debug:
     msg: "{{ instances | community.general.json_query(querystr) | flatten }}"
   loop: "{{ vpc | list }}"
   vars:
     querystr: "results[*].instances[?contains(placement.availability_zone, '{{ item }}')].instance_id"
 
 - name: "Terminate EC2 instances"
-  ec2_instance:
+  community.aws.ec2_instance:
     region: "{{ item }}"
     instance_ids: "{{ instances | community.general.json_query(querystr) | flatten }}"
     state: absent
@@ -33,11 +35,12 @@
   async: 7200
   poll: 0
 
-- debug:
+- name: "Report of ec2_instances"
+  ansible.builtin.debug:
     var: ec2_instances
 
 - name: Wait for instance termination to complete
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ item.ansible_job_id }}"
   register: ec2_jobs
   until: ec2_jobs.finished
@@ -66,7 +69,7 @@
   when: item.set is defined and item.set | length > 0
 
 - name: "Include networking teardown"
-  include_tasks: destroy_net.yml
+  ansible.builtin.include_tasks: destroy_net.yml
   when: destroy_networking
   loop: "{{ vpc | dict2items }}"
   vars:

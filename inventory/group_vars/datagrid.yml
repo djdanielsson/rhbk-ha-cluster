@@ -18,9 +18,9 @@ data_grid_default_realm_tls: True
 data_grid_keystore_path: /etc/pki/java/keystore.jks
 data_grid_keystore_alias: "*{{ domain_name }}"
 
-install_keystore: True
+certificates_install_keystore: True
 
-data_grid_bind_address: "{{inventory_hostname}}{{domain_name}}"
-data_grid_url: "https://{{inventory_hostname}}{{domain_name}}:11222"
+data_grid_bind_address: "{{ inventory_hostname }}{{ domain_name }}"
+data_grid_url: "https://{{ inventory_hostname }}{{ domain_name }}:11222"
 
 data_grid_version: 8.4.6

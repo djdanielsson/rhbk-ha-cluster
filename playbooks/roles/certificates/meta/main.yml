@@ -1,9 +1,9 @@
 ---
 galaxy_info:
-  role_name: aws
+  role_name: certificates
   namespace: infra
   author: Guido Grazioli, Ranabir Chakraborty
-  description: This role is for creating and deleting VM's on aws EC2.
+  description: The role is used to install required certificates and keystore.
   company: Red Hat
 
   license: Apache License 2.0
@@ -15,7 +15,7 @@ galaxy_info:
     - rhbk
     - ansible
     - datagrid
-    - aws
+    - certificates
     - cloud
 
 dependencies: []

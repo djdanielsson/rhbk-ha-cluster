@@ -1,6 +1,6 @@
 ---
-install_keystore: False
-install_trust_ca: True
-ca_cn: rhssocrossdc.com
-trust_ca_password: changeit
-tls_certs_lookup_path: ''
+certificates_install_keystore: False
+certificates_install_trust_ca: True
+certificates_ca_cn: rhssocrossdc.com
+certificates_trust_ca_password: changeit
+certificates_tls_certs_lookup_path: ''

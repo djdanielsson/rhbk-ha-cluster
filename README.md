@@ -3,6 +3,8 @@
 
 Provision and deploy a Red Hat Build of Keycloak authentication service on multiple AWS regions via Ansible
 
+### Use case of rhbk-datagrid-aws collection
+
 
 ### 0. prerequisites
 
@@ -64,4 +66,6 @@ This key pair will be used by ansible to connect to the EC2 instances.
 
 ### run the deployment of data_grid and rhbk
 
+## License
 
+[Apache License Version 2.0](https://github.com/ansible-middleware/rhbk-datagrid-aws/blob/main/LICENSE)

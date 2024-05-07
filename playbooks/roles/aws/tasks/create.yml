@@ -1,11 +1,11 @@
 ---
 - name: Check if vpc parameter is passed in
-  set_fact:
+  ansible.builtin.set_fact:
     build_vpc: true
   when: vpc.keys() | length == 0
 
 - name: Set vpc
-  set_fact:
+  ansible.builtin.set_fact:
     vpc: >-
       {{ vpc | default({}) | combine({ 
           item: {
@@ -34,7 +34,7 @@
   register: rhel8_amis
 
 - name: Select latest RHEL8 AMI
-  set_fact:
+  ansible.builtin.set_fact:
     latest_ami: >-
       {{ latest_ami | default({}) 
           | combine( { item.invocation.module_args.region: 
@@ -47,12 +47,13 @@
       }}
   loop: "{{ rhel8_amis.results }}"
 
-- set_fact:
+- name: VPC result
+  ansible.builtin.set_fact:
     vpc_result: "{{ vpc }}"
 
 - name: Create VPC, subnet and SG for each region
   loop: "{{ vpc | dict2items }}"
-  include_tasks: vpc.yml
+  ansible.builtin.include_tasks: vpc.yml
   vars:
     region: "{{ item.key }}"
     vpc_data: "{{ item.value }}"
@@ -78,7 +79,7 @@
   register: vpc_peer
 
 - name: Route table for peering
-  ec2_vpc_route_table:
+  community.aws.ec2_vpc_route_table:
     vpc_id: "{{ (vpc_result | dict2items | first).value.vpc_id }}"
     region: "{{ vpc_result | list | first }}"
     subnets: "{{ (vpc_result | dict2items | first).value.subnets | list }}"
@@ -108,19 +109,21 @@
     key_material: "{{ lookup('file', 'id_rsa_aws.pub') }}"
   loop: "{{ vpc | list }}"
 
-- set_fact:
+- name: VM result
+  ansible.builtin.set_fact:
     vm_result: []
 
 - name: Check if vm parameter is passed in
-  set_fact:
+  ansible.builtin.set_fact:
     build_vm: true
   when: vm | length == 0
 
-- debug:
+- name: "Reporting vpc result"
+  ansible.builtin.debug:
     msg: vpc_result
 
 - name: Set ec2 compute resources
-  set_fact:
+  ansible.builtin.set_fact:
     vm: >-
       {{ vm | default([]) + [{
           'name': item.1 + '-' + item.0.0.key + '-' + (item.0.1 + 1) | string,
@@ -134,16 +137,16 @@
   when: build_vm
 
 - name: Create EC2 instances for services
-  include_tasks: instance.yml
+  ansible.builtin.include_tasks: instance.yml
   loop: "{{ vm }}"
   loop_control:
     loop_var: instance
     index_var: vm_idx
 
 - name: "Report of generated networking"
-  debug:
+  ansible.builtin.debug:
     var: vpc_result
 
 - name: "Report of generated instances"
-  debug:
+  ansible.builtin.debug:
     var: vm_result

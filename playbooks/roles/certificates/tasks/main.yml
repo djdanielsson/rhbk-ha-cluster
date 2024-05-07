@@ -1,37 +1,37 @@
 ---
 - name: Install CA in shared truststore
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /usr/share/pki/ca-trust-source/anchors/
     owner: root
     group: root
     mode: 0444
   become: true
-  when: install_trust_ca
+  when: certificates_install_trust_ca
   loop:
     - "my-root-ca.crt.pem"
   notify:
     - update_ca_trust
 
 - name: Install keystore
-  copy:
+  ansible.builtin.copy:
     src: keystore.jks
     dest: "{{ data_grid_keystore_path }}"
     owner: root
     group: root
     mode: 0444
   become: true
-  when: install_keystore
+  when: certificates_install_keystore
   notify:
     - update_ca_trust
 
 - name: Retrive trusted CAs and add own CA if not present
-  command: keytool -list -keystore /etc/pki/java/cacerts -storepass changeit
+  ansible.builtin.command: keytool -list -keystore /etc/pki/java/cacerts -storepass changeit
   register: cacerts
   become: true
-  changed_when: ca_cn not in cacerts.stdout
+  changed_when: certificates_ca_cn not in cacerts.stdout
   notify:
     - update_ca_trust
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
