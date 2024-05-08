@@ -36,7 +36,6 @@ platforms:
 provisioner:
   name: ansible
   env:
-    ANSIBLE_VERBOSITY: 3
     PROD_JBOSSNETWORK_API_CLIENTID: "${PROD_JBOSSNETWORK_API_CLIENTID}"
     PROD_JBOSSNETWORK_API_SECRET: "${PROD_JBOSSNETWORK_API_SECRET}"
   config_options:
