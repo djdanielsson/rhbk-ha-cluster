@@ -32,7 +32,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install yamllint 'molecule>=6.0.3' 'molecule-plugins[docker]>=23.5.3' ansible-core ansible-lint
 
-      - name: Run molecule test and linter
+      - name: Prepare ansible.cfg and reqs
         run: |
           echo "[galaxy]
           server_list = automation_hub, release_galaxy
@@ -44,10 +44,17 @@ jobs:
           
           [galaxy_server.release_galaxy]
           url=https://galaxy.ansible.com/"> ansible.cfg
-          
           ansible-galaxy collection install -r molecule/requirements.yml
-          export PROD_JBOSSNETWORK_API_CLIENTID="${{ secrets.PROD_JBOSSNETWORK_API_CLIENTID }}"
-          export PROD_JBOSSNETWORK_API_SECRET="${{ secrets.PROD_JBOSSNETWORK_API_SECRET }}"
-          molecule test
+
+      - name: Linter
+        run: |
           ansible-lint --version
           ansible-lint --offline
+
+      - name: Run molecule test
+        run: |
+          molecule test
+        env:
+          PROD_JBOSSNETWORK_API_CLIENTID: '${{ secrets.PROD_JBOSSNETWORK_API_CLIENTID }}'
+          PROD_JBOSSNETWORK_API_SECRET: '${{ secrets.PROD_JBOSSNETWORK_API_SECRET }}'
+
