@@ -46,11 +46,6 @@ jobs:
           url=https://galaxy.ansible.com/"> ansible.cfg
           ansible-galaxy collection install -r molecule/requirements.yml
 
-      - name: Linter
-        run: |
-          ansible-lint --version
-          ansible-lint --offline
-
       - name: Run molecule test
         run: |
           molecule test
@@ -58,3 +53,7 @@ jobs:
           PROD_JBOSSNETWORK_API_CLIENTID: '${{ secrets.PROD_JBOSSNETWORK_API_CLIENTID }}'
           PROD_JBOSSNETWORK_API_SECRET: '${{ secrets.PROD_JBOSSNETWORK_API_SECRET }}'
 
+      - name: Linter
+        run: |
+          ansible-lint --version
+          ansible-lint --offline
