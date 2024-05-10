@@ -3,6 +3,6 @@
   connection: local
   tasks:
     - name: Terminate VMs on AWS.
-      include_role:
+      ansible.builtin.include_role:
         name: 'aws'
         tasks_from: destroy.yml

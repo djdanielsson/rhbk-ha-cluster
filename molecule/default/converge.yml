@@ -18,7 +18,7 @@
       data_grid_default_realm_tls: True
       data_grid_keystore_path: /etc/pki/java/keystore.jks
       data_grid_keystore_alias: "*{{ domain_name }}"
-      install_keystore: True
+      certificates_install_keystore: True
       data_grid_bind_address: "{{inventory_hostname}}{{domain_name}}"
       data_grid_url: "https://{{inventory_hostname}}{{domain_name}}:11222"
       rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
@@ -34,7 +34,6 @@
     skip_promtail: True
     admin_pass: "remembertochangeme"
     #rhbk_jdbc_engine: "dev_file"
-    rhbk_realm: TestRealm
     rhbk_host: instance_rhbk
     rhbk_log: file
     rhbk_https_key_file_enabled: True
@@ -47,6 +46,7 @@
     rhbk_infinispan_user: rhsso
     rhbk_infinispan_use_ssl: False
     rhbk_infinispan_url: "instance_dg1"
+    rhbk_realm: TestRealm
     rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
     rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
   roles:

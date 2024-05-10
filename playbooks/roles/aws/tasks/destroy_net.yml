@@ -9,7 +9,8 @@
       "tag:Created-By": "ansible"
   register: vpc_info
 
-- debug:
+- name: "Report of vpc_info"
+  ansible.builtin.debug:
     var: vpc_info
 
 - name: Gather information about VPC subnets

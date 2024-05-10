@@ -14,7 +14,8 @@
         promtail_logfile: /var/log/sso/server.log
         promtail_region: "{{ hostvars[inventory_hostname].tags.Region }}"
   post_tasks:
-    - include_role:
+    - name: Running rhbk_realm role
+      ansible.builtin.include_role:
         name: redhat.rhbk.rhbk_realm
         apply:
           delegate_to: "{{ ansible_play_hosts | first }}"

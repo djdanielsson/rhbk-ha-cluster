@@ -6,7 +6,7 @@
       ansible.builtin.include_role:
         name: fastpackages
       vars:
-        packages_list:
+        fastpackages_packages_list:
           - procps-ng
           - mailcap
           - unzip
@@ -30,6 +30,7 @@
       ansible.builtin.command: "hostnamectl set-hostname --static {{ inventory_hostname }}{{ domain_name }}"
       become: yes
       when: current_fqdn.stdout != (inventory_hostname + domain_name)
+      changed_when: true
     - name: "Install certificates"
       ansible.builtin.include_role:
         name: certificates

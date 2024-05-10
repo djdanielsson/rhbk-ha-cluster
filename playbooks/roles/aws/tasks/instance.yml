@@ -1,6 +1,6 @@
 ---
 - name: "Query for existing running instance: {{ instance.name }}"
-  ec2_instance_info:
+  amazon.aws.ec2_instance_info:
     region: "{{ instance.region }}"
     filters:
       "tag:Name": "{{ instance.name }}"
@@ -8,7 +8,7 @@
   register: running_instance
 
 - name: "Create EC2 instance: {{ instance.name }}"
-  ec2_instance:
+  community.aws.ec2_instance:
     region: "{{ instance.region }}"
     name: "{{ instance.name }}"
     instance_ids: "{{ instance.name }}"
@@ -30,7 +30,7 @@
   when: running_instance.instances | length == 0
 
 - name: "Query for running instance: {{ instance.name }}"
-  ec2_instance_info:
+  amazon.aws.ec2_instance_info:
     region: "{{ instance.region }}"
     filters:
       "tag:Name": "{{ instance.name }}"
@@ -40,7 +40,8 @@
   until: running_instance.instances[0].private_ip_address is defined and (running_instance.instances[0].public_ip_address is defined and running_instance.instances[0].state.name == 'running' or instance.role != 'loadbalancer')
   register: running_instance
 
-- set_fact:
+- name: "Setting vars for running instances"
+  ansible.builtin.set_fact:
     private_ip: "{{ running_instance.instances[0].private_ip_address }}"
     public_ip: "{{ running_instance.instances[0].public_ip_address | default('') }}"
     vm_result: "{{ vm_result + [{
@@ -67,7 +68,7 @@
   when: "instance.role == 'loadbalancer'"
 
 - name: "Add instance A record {{ instance.name }}.{{ privatednszone }} with private IP {{ private_ip }}"
-  route53:
+  amazon.aws.route53:
     state: present
     zone: "{{ privatednszone }}"
     record: "{{ instance.name }}.{{ privatednszone }}"
@@ -79,7 +80,7 @@
   delay: 5
 
 - name: "Add latency A record for {{ relative_name }}.{{ dns_name }} with public IP {{ instance_eip.public_ip }}"
-  route53:
+  amazon.aws.route53:
     state: present
     identifier: "{{ instance.region }}-{{ instance.name }}"
     region: "{{ instance.region }}"

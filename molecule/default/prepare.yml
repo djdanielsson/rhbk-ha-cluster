@@ -34,7 +34,7 @@
   hosts: datagrid
   tasks:
     - name: Install keystore
-      copy:
+      ansible.builtin.copy:
         src: keystore.jks
         dest: /etc/pki/java/
         owner: root
