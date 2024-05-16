@@ -41,12 +41,14 @@
     rhbk_cert_file: "/opt/rhbk/certs/cert.pem"
     rhbk_ha_enabled: True
     rhbk_frontend_url: "https://instance_rhbk/auth/"
-    rhbk_db_user: keycloak
     rhbk_configure_firewalld: False
     rhbk_infinispan_user: rhsso
     rhbk_infinispan_use_ssl: False
     rhbk_infinispan_url: "instance_dg1"
     rhbk_realm: TestRealm
+    rhbk_db_user: keycloak
+    rhbk_db_pass: mysecretpass
+    rhbk_jdbc_url: jdbc:postgresql://postgres:5432/keycloak
     rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
     rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
   roles:

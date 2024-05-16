@@ -33,6 +33,26 @@ platforms:
       - datagrid
     networks:
       - name: site
+  - name: postgres
+    image: ubuntu/postgres:14-22.04_beta
+    pre_build_image: true
+    privileged: true
+    command: postgres
+    groups:
+      - database
+    networks:
+      - name: site
+    port_bindings:
+      - "5432/tcp"
+    mounts:
+      - type: bind
+        target: /etc/postgresql/postgresql.conf
+        source: ${PWD}/molecule/quarkus_ha/postgresql/postgresql.conf
+    env:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: mysecretpass
+      POSTGRES_DB: keycloak
+      POSTGRES_HOST_AUTH_METHOD: trust
 provisioner:
   name: ansible
   env:
