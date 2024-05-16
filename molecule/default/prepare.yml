@@ -1,17 +1,14 @@
 ---
-- name: Prepare packages
-  hosts: all
+- name: Prepare rhbk tls
+  hosts: rhbk
   tasks:
     - name: Install sudo
       ansible.builtin.yum:
         name: sudo
         state: present
 
-- name: Prepare rhbk tls
-  hosts: rhbk
-  tasks:
     - name: Create certificate request
-      ansible.builtin.command: openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj '/CN=instance_rhbk'
+      ansible.builtin.command: openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj '/CN=rhbk'
       delegate_to: localhost
       changed_when: False
 
@@ -30,9 +27,20 @@
         - cert.pem
         - key.pem
 
+    - name: Install sudo
+      ansible.builtin.yum:
+        name: jq
+        state: present
+      become: true
+
 - name: Prepare datgrid tls
   hosts: datagrid
   tasks:
+    - name: Install sudo
+      ansible.builtin.yum:
+        name: sudo
+        state: present
+
     - name: Install keystore
       ansible.builtin.copy:
         src: keystore.jks
@@ -40,3 +48,9 @@
         owner: root
         group: root
         mode: 0444
+
+    - name: Install sudo
+      ansible.builtin.yum:
+        name: jq
+        state: present
+      become: true
