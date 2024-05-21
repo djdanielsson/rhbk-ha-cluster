@@ -1,5 +1,6 @@
 ---
 - name: Converge data_grid
+  gather_facts: true
   hosts: datagrid
   vars:
       user_accounts:
@@ -33,26 +34,35 @@
   vars:
     skip_promtail: True
     admin_pass: "remembertochangeme"
-    #rhbk_jdbc_engine: "dev_file"
-    rhbk_host: instance_rhbk
+    rhbk_host: "{{ inventory_hostname_short }}"
     rhbk_log: file
     rhbk_https_key_file_enabled: True
     rhbk_key_file: "/opt/rhbk/certs/key.pem"
     rhbk_cert_file: "/opt/rhbk/certs/cert.pem"
     rhbk_ha_enabled: True
-    rhbk_frontend_url: "https://instance_rhbk/auth/"
-    rhbk_db_user: keycloak
+    rhbk_frontend_url: "https://rhbk/"
     rhbk_configure_firewalld: False
     rhbk_infinispan_user: rhsso
     rhbk_infinispan_use_ssl: False
-    rhbk_infinispan_url: "instance_dg1"
+    rhbk_infinispan_url: "dg1"
     rhbk_realm: TestRealm
+    rhbk_db_user: keycloak
+    rhbk_db_pass: mysecretpass
+    rhbk_jdbc_url: jdbc:postgresql://postgres:5432/keycloak
     rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
     rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
   roles:
     - role: redhat.rhbk.rhbk
       rhbk_admin_pass: "{{ admin_pass }}"
+
+- name: Converge rhbk realm
+  hosts: rhbk1
+  vars:
+    skip_promtail: True
+    admin_pass: "remembertochangeme"
+  roles:
     - role: redhat.rhbk.rhbk_realm
+      rhbk_admin_password: "{{ admin_pass }}"
       rhbk_context: ''
       rhbk_client_default_roles:
         - TestRoleAdmin

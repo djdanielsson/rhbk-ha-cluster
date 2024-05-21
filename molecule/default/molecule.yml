@@ -2,21 +2,30 @@
 driver:
   name: docker
 platforms:
-  - name: instance_rhbk
-    image: registry.access.redhat.com/ubi8/ubi-init:latest
+  - name: rhbk1
+    image: registry.access.redhat.com/ubi9/ubi-init:latest
     pre_build_image: true
     privileged: true
     command: "/usr/sbin/init"
     port_bindings:
       - "443/tcp"
-    published_ports:
-      - 0.0.0.0:8443:443/tcp
     groups:
       - rhbk
     networks:
       - name: site
-  - name: instance_dg1
-    image: registry.access.redhat.com/ubi8/ubi-init:latest
+  - name: rhbk2
+    image: registry.access.redhat.com/ubi9/ubi-init:latest
+    pre_build_image: true
+    privileged: true
+    command: "/usr/sbin/init"
+    port_bindings:
+      - "443/tcp"
+    groups:
+      - rhbk
+    networks:
+      - name: site
+  - name: dg1
+    image: registry.access.redhat.com/ubi9/ubi-init:latest
     pre_build_image: true
     privileged: true
     command: "/usr/sbin/init"
@@ -24,8 +33,10 @@ platforms:
       - datagrid
     networks:
       - name: site
-  - name: instance_dg2
-    image: registry.access.redhat.com/ubi8/ubi-init:latest
+    port_bindings:
+      - "61616/tcp"
+  - name: dg2
+    image: registry.access.redhat.com/ubi9/ubi-init:latest
     pre_build_image: true
     privileged: true
     command: "/usr/sbin/init"
@@ -33,6 +44,28 @@ platforms:
       - datagrid
     networks:
       - name: site
+    port_bindings:
+      - "61616/tcp"
+  - name: postgres
+    image: ubuntu/postgres:14-22.04_beta
+    pre_build_image: true
+    privileged: true
+    command: postgres
+    groups:
+      - database
+    networks:
+      - name: site
+    port_bindings:
+      - "5432/tcp"
+    mounts:
+      - type: bind
+        target: /etc/postgresql/postgresql.conf
+        source: ${PWD}/molecule/default/postgresql/postgresql.conf
+    env:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: mysecretpass
+      POSTGRES_DB: keycloak
+      POSTGRES_HOST_AUTH_METHOD: trust
 provisioner:
   name: ansible
   env:

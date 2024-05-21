@@ -4,3 +4,5 @@ vault-pass
 *.zip
 *.pyc
 molecule/**/*.pem
+molecule/**/*.key
+.vscode/
