@@ -3,7 +3,7 @@
   hosts: rhbk
   tasks:
     - name: Install sudo
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: sudo
         state: present
 
@@ -28,7 +28,7 @@
         - key.pem
 
     - name: Install sudo
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: jq
         state: present
       become: true
@@ -37,7 +37,7 @@
   hosts: datagrid
   tasks:
     - name: Install sudo
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: sudo
         state: present
 
@@ -50,7 +50,7 @@
         mode: 0444
 
     - name: Install sudo
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: jq
         state: present
       become: true
