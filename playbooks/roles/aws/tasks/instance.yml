@@ -16,7 +16,7 @@
     vpc_subnet_id: "{{ instance.subnet.subnet_id | default(omit) }}"
     key_name: "{{ ssh_key_name }}"
     security_group: "{{ vpc_result[instance.region].name }}-{{ instance.role }}"
-    tags: "{{ resource_tags | combine( { 'Role': instance.role, 'Site': instance.region, 'Region': instance.region } ) }}"
+    tags: "{{ resource_tags | combine({'Role': instance.role, 'Site': instance.region, 'Region': instance.region}) }}"
     image_id: "{{ latest_ami[instance.region] }}"
     termination_protection: False
     volumes:

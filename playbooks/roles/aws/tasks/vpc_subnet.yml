@@ -20,4 +20,4 @@
             { 'subnet_id': created_subnet.subnet.id, 'az': created_subnet.subnet.availability_zone } 
           } 
         } 
-      }, recursive=True ) }}"  
+      }, recursive=True) }}"  

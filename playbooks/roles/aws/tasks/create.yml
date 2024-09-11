@@ -87,7 +87,7 @@
     routes:
       - dest: "{{ (vpc_result | dict2items | last).value.cidr_block }}"
         vpc_peering_connection_id: "{{ created_peering.peering_id }}"
-    tags: "{{ resource_tags | combine( { 'Name': 'Main Route Table', 'Cloud': 'AWS' } ) }}"
+    tags: "{{ resource_tags | combine({'Name': 'Main Route Table', 'Cloud': 'AWS'}) }}"
   when: vpc_result | dict2items | length > 1
 
 - name: Reverse route table for peering
@@ -99,7 +99,7 @@
     routes:
       - dest: "{{ (vpc_result | dict2items | first).value.cidr_block }}"
         vpc_peering_connection_id: "{{ created_peering.peering_id }}"
-    tags: "{{ resource_tags| combine( { 'Name': 'Main Route Table', 'Cloud': 'AWS' } ) }}"
+    tags: "{{ resource_tags| combine({'Name': 'Main Route Table', 'Cloud': 'AWS'}) }}"
   when: vpc_result | dict2items | length > 1
 
 - name: Create key pair using key_material
