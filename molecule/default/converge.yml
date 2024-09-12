@@ -51,6 +51,7 @@
     rhbk_jdbc_url: jdbc:postgresql://postgres:5432/keycloak
     rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
     rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
+    rhbk_show_deprecation_warnings: False
   roles:
     - role: redhat.rhbk.rhbk
       rhbk_admin_pass: "{{ admin_pass }}"

@@ -21,7 +21,7 @@
         { 'vpc_id': created_vpc.vpc.id, 
           'igw_id': created_igw.gateway_id 
         }, recursive=True ) 
-      } ) }}"
+      }) }}"
 
 - name: Create subnets in VPC
   loop: "{{ vpc_data.subnets | list }}"
@@ -38,7 +38,7 @@
     routes:
       - dest: 0.0.0.0/0
         gateway_id: "{{ created_igw.gateway_id  }}"
-    tags: "{{ resource_tags | combine( { 'Name': 'Main Route Table', 'Cloud': 'AWS' } )}}"
+    tags: "{{ resource_tags | combine({'Name': 'Main Route Table', 'Cloud': 'AWS'})}}"
   register: created_rtb
 
 - name: Create security groups

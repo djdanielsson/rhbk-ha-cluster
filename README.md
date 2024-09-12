@@ -1,5 +1,6 @@
 # rhbk-datagrid-aws
 
+[![CI](https://github.com/ansible-middleware/rhbk-datagrid-aws/actions/workflows/ci.yml/badge.svg)](https://github.com/ansible-middleware/rhbk-datagrid-aws/actions/workflows/ci.yml)
 
 Provision and deploy a Red Hat Build of Keycloak authentication service on multiple AWS regions via Ansible
 
@@ -73,7 +74,7 @@ These configurations ensure the infrastructure is tailored to your specific setu
 
 Inside `playbooks/roles` path we have `infra-up.yml` and `infra-down.yml` run both according to you need.
 
-### run the deployment of data_grid and rhbk
+### 7. run the deployment of data_grid and rhbk
 
 Inside `playbooks/roles` path we have `deploy.yml` playbook to deploy data_grid and rhbk.
 
