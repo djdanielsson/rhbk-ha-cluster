@@ -5,7 +5,7 @@ regions:
 filters:
   tag:Created-By: ansible
   tag:Application: rhbk
-  tag:Environment: rhbk-datagrid-aws
+  tag:Environment: rhbk-ha-cluster
 hostnames:
   - tag:Name
 leading_separator: no

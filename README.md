@@ -1,12 +1,12 @@
-# rhbk-datagrid-aws
+# rhbk-ha-cluster
 
-[![CI](https://github.com/ansible-middleware/rhbk-datagrid-aws/actions/workflows/ci.yml/badge.svg)](https://github.com/ansible-middleware/rhbk-datagrid-aws/actions/workflows/ci.yml)
+[![CI](https://github.com/ansible-middleware/rhbk-ha-cluster/actions/workflows/ci.yml/badge.svg)](https://github.com/ansible-middleware/rhbk-ha-cluster/actions/workflows/ci.yml)
 
 Provision and deploy a Red Hat Build of Keycloak authentication service on multiple AWS regions via Ansible
 
-### Use case of rhbk-datagrid-aws collection
+### Use case of rhbk-ha-cluster collection
 
-The primary use case of the `rhbk-datagrid-aws` collection is to install Red Hat Build of Keycloak (RHBK) with high availability (HA) across multiple AWS regions. This ensures that the authentication service is resilient, fault-tolerant, and capable of serving users even in the event of a regional failure. By leveraging AWS infrastructure, the collection automates the setup of RHBK in a highly available architecture, integrating with Data Grid for distributed caching and ensuring smooth, secure authentication.
+The primary use case of the `rhbk-ha-cluster` collection is to install Red Hat Build of Keycloak (RHBK) with high availability (HA) across multiple AWS regions. This ensures that the authentication service is resilient, fault-tolerant, and capable of serving users even in the event of a regional failure. By leveraging AWS infrastructure, the collection automates the setup of RHBK in a highly available architecture, integrating with Data Grid for distributed caching and ensuring smooth, secure authentication.
 
 ### 0. prerequisites
 
@@ -80,4 +80,4 @@ Inside `playbooks/roles` path we have `deploy.yml` playbook to deploy data_grid 
 
 ## License
 
-[Apache License Version 2.0](https://github.com/ansible-middleware/rhbk-datagrid-aws/blob/main/LICENSE)
+[Apache License Version 2.0](https://github.com/ansible-middleware/rhbk-ha-cluster/blob/main/LICENSE)

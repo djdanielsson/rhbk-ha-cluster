@@ -29,7 +29,7 @@ Example Playbook
 License
 -------
 
-[Apache License Version 2.0](https://github.com/ansible-middleware/rhbk-datagrid-aws/blob/main/LICENSE)
+[Apache License Version 2.0](https://github.com/ansible-middleware/rhbk-ha-cluster/blob/main/LICENSE)
 
 Author Information
 ------------------
