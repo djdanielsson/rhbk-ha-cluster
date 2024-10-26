@@ -1,11 +1,12 @@
 ---
 namespace: infra
-name: rhbk_datagrid_aws
+name: rhbk_ha_cluster
 version: "1.0.0"
 readme: README.md
 authors:
   - Guido Grazioli <ggraziol@redhat.com>
-description: Provision and deploy a Red Hat Build of Keycloak multi-regional authentication service on AWS
+  - Ranabir Chakraborty <rchakrab@redhat.com>
+description: Provision and deploy a Red Hat Build of Keycloak multi-regional authentication service on clusters.
 license_file: "LICENSE"
 tags:
   - keycloak
@@ -23,8 +24,8 @@ tags:
   - middleware
   - datagrid
   - infinispan
-  - AWS
   - a4mw
+  - cluster
 dependencies:
   "redhat.rhbk": ">=2.0.0"
   "redhat.data_grid": ">=1.1.4"

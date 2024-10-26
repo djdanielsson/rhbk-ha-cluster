@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: promtail
+  namespace: infra
+  author: Guido Grazioli, Ranabir Chakraborty
+  description: The role is used to setup and configure Promtail.
+  company: Red Hat
+
+  license: Apache License 2.0
+
+  min_ansible_version: "2.14"
+
+  galaxy_tags:
+    - java
+    - rhbk
+    - ansible
+    - datagrid
+    - promtail
+
+dependencies: []

@@ -3,5 +3,3 @@ collections:
   - name: redhat.rhbk
   - name: redhat.data_grid
     version: '>=1.1.4'
-  - name: community.aws
-  - name: amazon.aws

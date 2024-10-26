@@ -2,9 +2,6 @@
 jvm_package: java-17-openjdk-headless
 domain_name: '.internal.ansiblemiddleware.com'
 external_domain_name: 'rhbk.demos.ansiblemiddleware.com'
-regions:
-  - eu-central-1
-  - us-east-2
 resource_tags:
   Environment: rhbk-ha-cluster
   Application: rhbk

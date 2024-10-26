@@ -1,0 +1,4 @@
+- name: Run update_ca_trust
+  ansible.builtin.command: update-ca-trust
+  become: true
+  changed_when: false

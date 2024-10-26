@@ -1,8 +1,0 @@
-- name: Terminate AWS VMs
-  hosts: localhost
-  connection: local
-  tasks:
-    - name: Terminate VMs on AWS.
-      ansible.builtin.include_role:
-        name: 'aws'
-        tasks_from: destroy.yml
