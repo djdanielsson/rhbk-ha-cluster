@@ -2,7 +2,7 @@
 rhbk_ha_enabled: True
 rhbk_frontend_url: "https://{{ external_domain_name }}/auth/"
 rhbk_jdbc_engine: postgres
-rhbk_jdbc_url: "jdbc:postgresql://{{ aurora_endpoint }}/keycloak?socketTimeout=10000"
+rhbk_jdbc_url: "jdbc:postgresql://{{ db_endpoint }}/keycloak?socketTimeout=10000"
 
 rhbk_db_user: keycloak
 rhbk_configure_firewalld: True

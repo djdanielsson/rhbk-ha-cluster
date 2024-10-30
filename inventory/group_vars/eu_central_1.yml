@@ -1,3 +1,3 @@
 ---
-aurora_endpoint: rhbk-ha-cluster.cluster-cqy2krcosm24.eu-central-1.rds.amazonaws.com:5432
+db_endpoint: rhbk-ha-cluster.cluster-cqy2krcosm24.eu-central-1:5432
 data_grid_jgroups_relay_site: eu-central-1

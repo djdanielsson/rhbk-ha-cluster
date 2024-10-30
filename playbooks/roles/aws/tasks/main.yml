@@ -1,3 +1,0 @@
----
-- name: "Starts creating aws instances"
-  ansible.builtin.include_tasks: "{{ action | default('create') }}.yml"
