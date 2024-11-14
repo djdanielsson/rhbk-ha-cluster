@@ -22,15 +22,10 @@ Role Variables
 
 <!--end argument_specs-->
 
-Dependencies
-------------
-
-* amazon.aws
-* community.aws
-* community.general
-
 Example Playbook
 ----------------
+
+Available under `playbooks` directory
 
 License
 -------
