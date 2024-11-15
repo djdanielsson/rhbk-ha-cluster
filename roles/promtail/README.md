@@ -24,13 +24,10 @@ Role Variables
 
 <!--end argument_specs-->
 
-Dependencies
-------------
-
-* community.general
-
 Example Playbook
 ----------------
+
+Available under `playbooks` directory
 
 License
 -------
