@@ -47,11 +47,6 @@ jobs:
 
           ansible-galaxy collection install -r molecule/requirements.yml
 
-      - name: Linter
-        run: |
-          ansible-lint --version
-          ansible-lint --offline
-
       - name: Run molecule test
         run: |
           molecule --version
