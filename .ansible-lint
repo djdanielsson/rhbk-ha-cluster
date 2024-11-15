@@ -1,7 +1,9 @@
 # .ansible-lint
 
-rulesdir:
-   - ../../ansible-lint-custom-rules/rules/
+profile: production
+
+# rulesdir:
+#    - ../../ansible-lint-custom-rules/rules/
 
 enable_list:
   - fqcn-builtins  # opt-in

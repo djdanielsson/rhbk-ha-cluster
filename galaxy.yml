@@ -37,7 +37,6 @@ issues: https://github.com/ansible-middleware/rhbk-ha-cluster/issues
 build_ignore:
   - .gitignore
   - .github
-  - .ansible-lint
   - .yamllint
   - '*.tar.gz'
   - '*.zip'
