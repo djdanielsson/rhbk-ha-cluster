@@ -1,7 +1,7 @@
 ---
 namespace: infra
 name: rhbk_ha_cluster
-version: "1.0.0"
+version: 1.0.0
 readme: README.md
 authors:
   - Guido Grazioli <ggraziol@redhat.com>
