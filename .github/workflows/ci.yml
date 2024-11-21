@@ -49,8 +49,8 @@ jobs:
 
       - name: Linter
         run: |
-         ansible-lint --version
-         ansible-lint --offline
+          ansible-lint --version
+          ansible-lint --offline
 
       - name: Run molecule test
         run: |
