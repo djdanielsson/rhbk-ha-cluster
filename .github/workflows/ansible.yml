@@ -12,6 +12,13 @@ on:
   schedule:
     - cron: "0 0 * * *"
 
+env: 
+  ANSIBLE_GALAXY_SERVER_LIST: automation_hub,upstream_galaxy
+  ANSIBLE_GALAXY_SERVER_UPSTREAM_GALAXY_URL: https://galaxy.ansible.com/
+  ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL: https://console.redhat.com/api/
+  ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN: ${{ secrets.CONSOLE_TOKEN }}
+
 jobs:
   changelog:
     uses: ansible/ansible-content-actions/.github/workflows/changelog.yaml@main
