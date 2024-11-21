@@ -17,7 +17,7 @@ env:
   ANSIBLE_GALAXY_SERVER_UPSTREAM_GALAXY_URL: https://galaxy.ansible.com/
   ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL: https://console.redhat.com/api/
   ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-  ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN: ${{ secrets.CONSOLE_TOKEN }}
+  ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN: ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
 
 jobs:
   changelog:
