@@ -27,10 +27,8 @@ tags:
   - a4mw
   - cluster
 dependencies:
-  # "redhat.rhbk": ">=2.0.0"
-  # "redhat.data_grid": ">=1.1.4"
-  "middleware_automation.keycloak": ">=2.0.0"
-  "middleware_automation.infinispan": ">=1.1.4"
+  "redhat.rhbk": ">=2.0.0"
+  "redhat.data_grid": ">=1.1.4"
   "ansible.posix": ">=1.4.0"
 repository: https://github.com/ansible-middleware/rhbk-ha-cluster
 documentation: https://ansible-middleware.github.io/rhbk-ha-cluster
